@@ -1,0 +1,64 @@
+﻿<!DOCTYPE HTML>
+
+<html lang="ru">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Задание 2</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript">
+      const horizontal = [2, 1, -1, -2, -2, -1, 1, 2];
+      const vertical = [-1, -2, -2, -1, 1 ,2 ,2, 1];
+      const ABC = ['A', 'B', 'C', 'D', 'E', 'F', 'G','H'];
+
+      function btnClick1() {
+        let str = document.test2.figure.value;
+        let x = str.charAt(0);
+        let y = str.charAt(1);
+        // проверяем вводимый формат хода
+        if (str.length !== 2 || ABC.indexOf(x) === -1 || y.match(/^[-\+]?\d+/) === null || y < 1 || y > 8) {
+          alert('Неверный формат');
+          return;
+        };
+        // переводим обе переменные в число
+        x = parseInt(ABC.indexOf(x) + 1);
+        y = parseInt(y);
+        // расчет возможных ходов
+        let result = ' ';
+
+        for (let i=0; i<8; i++) {
+          let xMove = x + horizontal[i];
+          let yMove = y + vertical[i];
+          if (xMove > 0 && xMove <= 8 && yMove > 0 && yMove <= 8) {
+            xMove = ABC[xMove - 1];
+            result += ' ' + String(xMove) + String(yMove);
+          }
+        }
+        document.getElementById("figures").innerHTML = result;
+        document.getElementById("form").style.visibility = "hidden";
+        document.getElementById("output").style.visibility = "visible";
+      }
+      function btnClick2() {
+        document.getElementById("form").style.visibility = "visible";
+        document.getElementById("output").style.visibility = "hidden";
+      }
+    </script>
+  </head>
+
+  <body>
+      <form id="form" name="test2">
+         <label>Исходное положение:</label>
+         <input class="figure" type="text" name="figure" >
+         <input type="button" name="btn" value="Ок" onClick="btnClick1();">
+      </form>
+
+    <div id="output">
+      <p>Возможные варианты хода:</p>
+      <p id="figures">result</p>
+      <input class="btn btn-primary" type="button" name="btn" value="OK" onClick="btnClick2();">
+    </div>
+
+  </body>
+
+</html>
